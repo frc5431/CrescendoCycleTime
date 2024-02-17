@@ -115,7 +115,7 @@ function App() {
   function setAllData () {
     setTime(new Date());
     setLeftData([(ampCount+speakerCount+trapCount).toString(10), (ampCountM+speakerCountM+trapCountM).toString(10)]);
-    setRightData([(currTime.getTime() - startTime.getTime()).toString(10), 0]); 
+    setRightData([(currTime.getTime() - startTime.getTime()).toString(10), "0"]); 
   }
 
   function setAllIndividualData () {
