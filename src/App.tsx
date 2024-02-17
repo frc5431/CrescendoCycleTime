@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Counter from './components/Counter';
 import Sidedata from './components/Sidedata';
+import moment from 'moment';
+import TimeStorage from './TimeStorage';
 
 function App() {
-  const startTime = new Date();
+  const [startTime, setStartTime] = useState(new Date());
   const [currTime, setTime] = useState(new Date());
 
   const [ampCount, setAmpCount] = useState(0);
@@ -19,19 +21,24 @@ function App() {
   const leftInfo = ["Total amount scored", "Total amount missing"];
   const rightInfo = ["Total time elapsed", "Time since last score"];
 
-  const individualInfo = ["Average time to score", "Percentage score"];
+  const individualInfo = ["Average time to score", "Percentage scored"];
   const [ampData, setAmpData] = useState(["0", "0", "100%"]);
   const [speakerData, setSpeakerData] = useState(["0", "0", "100%"]);
   const [trapData, setTrapData] = useState(["0", "0", "100%"]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setAllData();
-  //     setAllIndividualData();
-  //   }, 100);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      
+      setTime(new Date());
+      setAllData();
+      setAllIndividualData();
+      // console.log(ampData[2]);
+      // console.log(speakerData[2]);
+      // console.log(trapData[2]);
+    }, 100);
 
-  //   return () => clearInterval(interval);
-  // }, [setAllData, setAllIndividualData]);
+    return () => clearInterval(interval);
+  }, [setAllData, setAllIndividualData]);
 
   return (
     <div className="grid">
@@ -64,7 +71,7 @@ function App() {
         setAmpCount(ampCount + 1);
       }
       else {
-        ampCount > 0 ? setAmpCount(ampCount + 1) : setAmpCount(0);
+        ampCount > 0 ? setAmpCount(ampCount - 1) : setAmpCount(0);
       }
     }
     else if (type === "speaker") {
@@ -72,7 +79,7 @@ function App() {
         setSpeakerCount(speakerCount + 1);
       }
       else {
-        speakerCount > 0 ? setSpeakerCount(speakerCount + 1) : setSpeakerCount(0);
+        speakerCount > 0 ? setSpeakerCount(speakerCount - 1) : setSpeakerCount(0);
       }
     }
     else if (type === "trap") {
@@ -80,7 +87,7 @@ function App() {
         setTrapCount(trapCount + 1);
       }
       else {
-        trapCount > 0 ? setTrapCount(trapCount + 1) : setTrapCount(0);
+        trapCount > 0 ? setTrapCount(trapCount - 1) : setTrapCount(0);
       }
     }
     if (type === "ampM") {
@@ -88,7 +95,7 @@ function App() {
         setAmpCountM(ampCountM + 1);
       }
       else {
-        ampCountM > 0 ? setAmpCountM(ampCountM + 1) : setAmpCountM(0);
+        ampCountM > 0 ? setAmpCountM(ampCountM - 1) : setAmpCountM(0);
       }
     }
     else if (type === "speakerM") {
@@ -96,7 +103,7 @@ function App() {
         setSpeakerCountM(speakerCountM + 1);
       }
       else {
-        speakerCountM > 0 ? setSpeakerCountM(speakerCountM + 1) : setSpeakerCountM(0);
+        speakerCountM > 0 ? setSpeakerCountM(speakerCountM - 1) : setSpeakerCountM(0);
       }
     }
     else if (type === "trapM") {
@@ -104,7 +111,7 @@ function App() {
         setTrapCountM(trapCountM + 1);
       }
       else {
-        trapCountM > 0 ? setTrapCountM(ampCountM + 1) : setTrapCountM(0);
+        trapCountM > 0 ? setTrapCountM(trapCountM - 1) : setTrapCountM(0);
       }
     }
     else {
@@ -113,9 +120,8 @@ function App() {
   }
 
   function setAllData () {
-    setTime(new Date());
     setLeftData([(ampCount+speakerCount+trapCount).toString(10), (ampCountM+speakerCountM+trapCountM).toString(10)]);
-    setRightData([(currTime.getTime() - startTime.getTime()).toString(10), "0"]); 
+    setRightData([((currTime.getTime() - startTime.getTime()) / 1000).toFixed(0) + " seconds ago", "0"]); 
   }
 
   function setAllIndividualData () {

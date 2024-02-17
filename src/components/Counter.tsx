@@ -32,6 +32,7 @@ function Counter ({name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
       <div>
         <h2>Missing: {countM}</h2>
       </div>
+      
       <Sidedata data={data} displayInfo={displayInfo}></Sidedata>
     </>
   )
