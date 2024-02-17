@@ -19,6 +19,16 @@
   grid-column-end: 4;
 }
 
+.leftData {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.rightData {
+  grid-row: 2;
+  grid-column: 3;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(1fr, 3);
@@ -29,6 +39,7 @@
 .amp {
   grid-row: 3;
   grid-column: 1;
+  
 }
 
 .speaker {
