@@ -10,7 +10,9 @@ function App() {
   return (
     <div className='grid'>
       <div className="title">
-        <h1><span className="crescendo">Crescendo</span> Cycle Time App!</h1>
+        <h1><img className="logo" src="src/assets/note.png" alt="image of frc crescendo note"/>
+        <span className="crescendo">Crescendo</span> Cycle Time App!
+        <img className="logo" src="src/assets/note.png" alt="image of frc crescendo note"/> </h1>
       </div>
       <div className='timeData'>
       <TimeData
