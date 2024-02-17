@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #282A36;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -54,6 +54,8 @@
 
 .imageStyle {
   width: 20%;
+  margin: 0 auto;
+  max-width: 100%; 
 }
 
 a {
@@ -83,15 +85,21 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 30px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #BD93F9;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  top: 50%;
+  bottom: 50%;
 }
 button:hover {
   border-color: #646cff;
@@ -101,13 +109,45 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.container {
+  position: relative;
+  text-align: center; /* Center the content horizontally */
+}
+
+.redbutton {
+  width: 45px;
+  height: 40px;
+  border-radius: 30px;
+  border: 1px solid transparent;
+  padding: 0.6em 0.6em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #FF5555;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  transform: translateY(-60%);
+}
+redbutton:hover {
+  border-color: #ffffff;
+}
+redbutton:focus,
+redbutton:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #ffffff;
   }
   button {
     background-color: #f9f9f9;

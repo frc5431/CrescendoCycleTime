@@ -21,10 +21,10 @@ function Counter ({name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
       <div>
         <button onClick={onButtonUp}>↑</button>
       </div>
-      <div>
-      <button onClick={onMClickUp}>M</button>
+      <div className="container">
+      <button onClick={onMClickUp} className="redbutton">M</button>
         <img className="imageStyle" src="src/assets/note.png" alt="image of frc crescendo note"/>
-        <button onClick={onMClickDown}>-M</button>
+        <button onClick={onMClickDown} className="redbutton">-M</button>
       </div>
       <div>
         <button onClick={onButtonDown}>↓</button>

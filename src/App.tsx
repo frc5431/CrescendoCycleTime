@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="grid">
       <div className="title">
-        <h1>Crescendo Cycle Time App!</h1>
+        <h1><span className="crescendo">Crescendo</span> Cycle Time App!</h1>
       </div>
 
       <div className="leftData">
