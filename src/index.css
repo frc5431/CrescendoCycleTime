@@ -19,11 +19,8 @@
   grid-column-end: 4;
 }
 
-.reset {
-
-}
-
-.leftData {
+.timeData {
+  text-align: left;
   grid-row: 2;
   grid-column: 1;
 }

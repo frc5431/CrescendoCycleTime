@@ -40,8 +40,11 @@ export default class TimeStorage {
     return typed[typed.length - 1].time.getTime() - typed[typed.length - 2].time.getTime();
   }
 
-  lastCycleTime(type: string): number {
-    
+  lastCycleTime(): number {
+    if(this.times.length < 2) {
+      return 0;
+    }
+    return this.times[this.times.length - 1].time.getTime() - this.times[this.times.length - 2].time.getTime();
   }
 
   bestCycle() {

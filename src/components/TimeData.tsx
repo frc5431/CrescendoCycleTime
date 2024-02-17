@@ -9,10 +9,16 @@ const TimeData: React.FC<TimeDataProps> = ({timeElapsed, timeSinceLastScore}) =>
 
   return (
     <>
-      <h2>
-        Time Elapsed: {timeElapsed}
-        Time Since Last Score: {timeSinceLastScore}
-      </h2>
+      <div>
+        <h2>
+         Time Elapsed: {timeElapsed}
+        </h2>
+      </div>
+      <div>
+        <h2>
+          Time Since Last Score: {timeSinceLastScore}
+        </h2>
+      </div>
     </>
   )
 }
