@@ -93,6 +93,7 @@ function App() {
     if (type === "ampM") {
       if (isUp) {
         setAmpCountM(ampCountM + 1);
+        setAmpData([ampCountM.toString(), ampData[1], ampData[2]]);
       }
       else {
         ampCountM > 0 ? setAmpCountM(ampCountM - 1) : setAmpCountM(0);
@@ -101,6 +102,7 @@ function App() {
     else if (type === "speakerM") {
       if (isUp) {
         setSpeakerCountM(speakerCountM + 1);
+        setSpeakerData([speakerCountM.toString(), speakerData[1], speakerData[2]]);
       }
       else {
         speakerCountM > 0 ? setSpeakerCountM(speakerCountM - 1) : setSpeakerCountM(0);
@@ -109,6 +111,7 @@ function App() {
     else if (type === "trapM") {
       if (isUp) {
         setTrapCountM(trapCountM + 1);
+        setTrapData([trapCountM.toString(), trapData[1], trapData[2]]);
       }
       else {
         trapCountM > 0 ? setTrapCountM(trapCountM - 1) : setTrapCountM(0);
