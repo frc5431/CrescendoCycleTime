@@ -4,8 +4,7 @@ export interface TimeDataProps {
 }
 
 
-const TimeData: React.FC<TimeDataProps> = ({timeElapsed, timeSinceLastScore}) => {
-
+const TimeData: React.FC<TimeDataProps> = ({timeElapsed, timeSinceLastScore}: TimeDataProps) => {
 
   return (
     <>
