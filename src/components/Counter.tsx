@@ -6,11 +6,10 @@ interface Props {
   onButtonDown: () => void;
   onMClickUp: () => void;
   onMClickDown: () => void;
-  averageTimeToScore: number;
   percentageScored: number;
 }
 
-function Counter ({name, count, countM, onButtonDown, onButtonUp, onMClickDown, onMClickUp,averageTimeToScore, percentageScored} : Props) {
+function Counter ({name, count, countM, onButtonDown, onButtonUp, onMClickDown, onMClickUp, percentageScored} : Props) {
 
   return (
     <>
@@ -31,14 +30,14 @@ function Counter ({name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
         <h2>Missing: {countM}</h2>
       </div>
       
-      <div>
+      {/* <div>
         <h2>
           Average Time to Score: {averageTimeToScore}
         </h2>
-      </div>
+      </div> */}
       <div>
         <h2>
-         Perecentage Scored: {percentageScored}
+         Perecentage Scored: {percentageScored.toFixed(2)}%
         </h2>
       </div>
     </>

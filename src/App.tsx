@@ -1,47 +1,29 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { Event, Type} from './TimeStorage';
+import TimeStorage, { Event, Type} from './TimeStorage';
 import Counter from './components/Counter';
 import ScoreInfo from './components/ScoreInfo';
 import TimeInfo from './components/TimeInfo';
+import Options from './components/Options';
 
 function App() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [timeData, setTimeData] = useState(new TimeStorage([], new Date()));
+  const [TSLS, setTSLS] = useState(0); // time since last scored
+  const [timeElapsed, setTimeElapsed] = useState(new Date());
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeElapsed(new Date());
+      if (timeData.getTimes().length == 0) {
+        setTSLS(timeElapsed.getTime() - timeData.getStartTime().getTime());
+      }
+      else {
+        setTSLS(timeElapsed.getTime() - timeData.getTimes()[timeData.getTimes().length-1].time.getTime());
+      }
+    }, 20);
 
-  // const [startTime, setStartTime] = useState(new Date());
-  // const [currTime, setTime] = useState(new Date());
-
-  // const [ampCount, setAmpCount] = useState(0);
-  // const [speakerCount, setSpeakerCount] = useState(0);
-  // const [trapCount, setTrapCount] = useState(0);
-  // const [ampCountM, setAmpCountM] = useState(0);
-  // const [speakerCountM, setSpeakerCountM] = useState(0);
-  // const [trapCountM, setTrapCountM] = useState(0);
-
-  // const [leftData, setLeftData] = useState(["0", "0", "0"]);
-  // const [rightData, setRightData] = useState(["0", "0", "0"]);
-  // const leftInfo = ["Total amount scored", "Total amount missing"];
-  // const rightInfo = ["Total time elapsed", "Time since last score"];
-
-  // const individualInfo = ["Average time to score", "Percentage scored"];
-  // const [ampData, setAmpData] = useState(["0", "0", "100%"]);
-  // const [speakerData, setSpeakerData] = useState(["0", "0", "100%"]);
-  // const [trapData, setTrapData] = useState(["0", "0", "100%"]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-
-  //     setTime(new Date());
-  //     setAllData();
-  //     setAllIndividualData();
-  //     // console.log(ampData[2]);
-  //     // console.log(speakerData[2]);
-  //     // console.log(trapData[2]);
-  //   }, 100);
-
-  //   return () => clearInterval(interval);
-  // }, [setAllData, setAllIndividualData]);
+    return () => clearInterval(interval);
+  }, [timeData, timeElapsed]);
 
   return (
     <div className="grid">
@@ -51,40 +33,82 @@ function App() {
 
       <div className="scoreInfo">
         <ScoreInfo
-          totalAmountMissing={0} // temp
-          totalAmountScored={0}  // temp
+          totalAmountScored={timeData.getCount(Type.Amp, true) + timeData.getCount(Type.Speaker, true) + timeData.getCount(Type.Trap, true)}  
+          totalAmountMissing={timeData.getCount(Type.Amp, false) + timeData.getCount(Type.Speaker, false) + timeData.getCount(Type.Trap, false)}
         />
       </div>
       <div className='timeInfo'>
         <TimeInfo
-          timeElapsed={0} // temp
-          timeSinceLastScore={0} //temp
+          timeElapsed={(timeElapsed.getTime()-timeData.getStartTime().getTime()) / 1000}
+          timeSinceLastScore={TSLS / 1000}
         />
+      </div>
+      
+      <div className='options'>
+        <Options 
+          onClickPause={() => {}}
+          onClickStart={() => {}}
+          />
       </div>
 
       <div className='amp'>
         <Counter
           name='Amp'
-          count={timeData.ampCount()}
-          countM={timeData.ampCountM()}
-          onMClickDown={() =>{handleButtonClick(Type.Amp, false)}}
-          onMClickUp={() =>{handleButtonClick(Type.Amp, true)}}
-          onButtonDown={() =>{handleButtonClick(Type.Amp, false)}}
-          onButtonUp={() =>{handleButtonClick(Type.Amp, true)}}
-          averageTimeToScore={timeData.averageCycle("amp")}
-          percentageScored={timeData.percentageScored("amp")}
+          count={timeData.getCount(Type.Amp, true)}
+          countM={timeData.getCount(Type.Amp, false)}
+          onMClickDown={() =>{handleButtonClick(Type.Amp, false, false)}}
+          onMClickUp={() =>{handleButtonClick(Type.Amp, false, true)}}
+          onButtonDown={() =>{handleButtonClick(Type.Amp,true, false)}}
+          onButtonUp={() =>{handleButtonClick(Type.Amp, true, true)}}
+          percentageScored={timeData.percentageScored(Type.Amp)}
         />
       </div>
-
+      <div className='speaker'>
+        <Counter
+          name='Speaker'
+          count={timeData.getCount(Type.Speaker, true)}
+          countM={timeData.getCount(Type.Speaker, false)}
+          onMClickDown={() =>{handleButtonClick(Type.Speaker, false, false)}}
+          onMClickUp={() =>{handleButtonClick(Type.Speaker, false, true)}}
+          onButtonDown={() =>{handleButtonClick(Type.Speaker,true, false)}}
+          onButtonUp={() =>{handleButtonClick(Type.Speaker, true, true)}}
+          percentageScored={timeData.percentageScored(Type.Speaker)}
+        />
+      </div>
+      <div className='trap'>
+        <Counter
+          name='Trap'
+          count={timeData.getCount(Type.Trap, true)}
+          countM={timeData.getCount(Type.Trap, false)}
+          onMClickDown={() =>{handleButtonClick(Type.Trap, false, false)}}
+          onMClickUp={() =>{handleButtonClick(Type.Trap, false, true)}}
+          onButtonDown={() =>{handleButtonClick(Type.Trap,true, false)}}
+          onButtonUp={() =>{handleButtonClick(Type.Trap, true, true)}}
+          percentageScored={timeData.percentageScored(Type.Trap)}
+        />
+      </div>
 
       
 
     </div>
   )
 
-  function handleButtonClick (type: Type, isUp: boolean) {
-    const updated = [...events,  new Event(type, new Date(), isUp)]
-    setEvents(updated);
+  function handleButtonClick (type: Type, isScore: boolean, isUp: boolean) {
+    if (isUp) {
+      const times: Event[] = [...timeData.getTimes(), new Event(type, new Date(), isScore)];
+      setTimeData(new TimeStorage(times, timeData.getStartTime()));
+    }
+    else {
+      const times: Event[] = [...timeData.getTimes()];
+      for (let i = times.length-1; i >= 0; i--) {
+        if (times[i].type === type && times[i].isScore === isScore) {
+          times.splice(i, 1);
+          break;
+        }
+      }
+      console.log(times);
+      setTimeData(new TimeStorage(times, timeData.getStartTime()));
+    }
   }
 
 
