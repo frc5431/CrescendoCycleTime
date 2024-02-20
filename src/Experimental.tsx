@@ -7,33 +7,29 @@ import TimeInfo from './components/TimeInfo';
 import Options from './components/Options';
 
 function App() {
+  const [started, setStarted] = useState(false);
   const [timeData, setTimeData] = useState(new TimeStorage([], new Date()));
   const [TSLS, setTSLS] = useState(0); // time since last scored
   const [timeElapsed, setTimeElapsed] = useState(new Date());
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeElapsed(new Date());
-      if (timeData.getTimes().length == 0) {
-        setTSLS(timeElapsed.getTime() - timeData.getStartTime().getTime());
-      }
-      else {
-        setTSLS(timeElapsed.getTime() - timeData.getTimes()[timeData.getTimes().length-1].time.getTime());
-      }
-    }, 20);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setTimeElapsed(new Date());
+  //     if (timeData.getTimes().length == 0) {
+  //       setTSLS(timeElapsed.getTime() - timeData.getStartTime().getTime());
+  //     }
+  //     else {
+  //       setTSLS(timeElapsed.getTime() - timeData.getTimes()[timeData.getTimes().length-1].time.getTime());
+  //     }
+  //   }, 20);
 
-    return () => clearInterval(interval);
-  }, [timeData, timeElapsed]);
-
+  //   return () => clearInterval(interval);
+  // }, [timeData, timeElapsed]);
+  
   return (
     <div className="grid">
-
       <div className="title">
-      <h1>
-          <img className="logo" src="src/assets/note.png" alt="image of frc crescendo note"/>
-          <span className="crescendo">Crescendo</span> Cycle Time App!
-          <img className="logo" src="src/assets/note.png" alt="image of frc crescendo note"/>
-        </h1>
+        <h1><span className="crescendo">Crescendo</span> Cycle Time App!</h1>
       </div>
 
       <div className="scoreInfo">
@@ -52,8 +48,8 @@ function App() {
       <div className='options'>
         <Options 
           onClickPause={() => {}}
-          onClickStart={() => {}}
-          />
+          onClickStart={startInterval}
+        />
       </div>
 
       <div className='amp'>
@@ -97,6 +93,24 @@ function App() {
 
     </div>
   )
+  
+  function startInterval () {
+    if (started) {
+      return;
+    }
+    setTimeData(new TimeStorage([], new Date()));
+    setStarted(true);
+    const interval = setInterval(() => {
+      if (timeData.getTimes().length == 0) {
+        setTSLS(timeElapsed.getTime() - timeData.getStartTime().getTime());
+      }
+      else {
+        setTSLS(timeElapsed.getTime() - timeData.getTimes()[timeData.getTimes().length-1].time.getTime());
+      }
+      setTimeElapsed(new Date());
+    }, 20);
+    return () => clearInterval(interval);
+  }
 
   function handleButtonClick (type: Type, isScore: boolean, isUp: boolean) {
     if (isUp) {
@@ -115,6 +129,18 @@ function App() {
       setTimeData(new TimeStorage(times, timeData.getStartTime()));
     }
   }
+
+
+  // function setAllData () {
+  //   setLeftData([(ampCount+speakerCount+trapCount).toString(10), (ampCountM+speakerCountM+trapCountM).toString(10)]);
+  //   setRightData([((currTime.getTime() - startTime.getTime()) / 1000).toFixed(0) + " seconds ago", "0"]);
+  // }
+
+  // function setAllIndividualData () {
+  //   setAmpData(["0", "0", (ampCount / (ampCount+ampCountM) * 100).toString(10) + "%"]);
+  //   setSpeakerData(["0", "0", (speakerCount / (speakerCount+speakerCountM) * 100).toString(10) + "%"]);
+  //   setTrapData(["0", "0", (trapCount / (trapCount+trapCountM) * 100).toString(10) + "%"]);
+  // }
 }
 
-export default App;
+export default App
