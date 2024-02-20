@@ -119,19 +119,19 @@ export default class TimeStorage {
         return 100;
       }
       return this.ampCount() / (this.ampCount()+this.ampCountM()) * 100;
-    } 
+    }
     else if (type === "speaker") {
       if (this.speakerCount()+this.speakerCountM() === 0) {
         return 100;
       }
       return this.speakerCount() / (this.speakerCount()+this.speakerCountM()) * 100;
-    } 
+    }
     else if (type === "trap") {
       if (this.trapCount()+this.trapCountM() === 0) {
         return 100;
       }
       return this.trapCount() / (this.trapCount()+this.trapCountM()) * 100;
-    } 
+    }
     else {
       return -1;
     }
@@ -141,8 +141,6 @@ export default class TimeStorage {
     return this.times;
   }
 
-  
-}
 
 export enum resultType {
   Score,
@@ -150,7 +148,7 @@ export enum resultType {
   Start
 }
 export class DateInfo {
-  
+
   type: string;
   time: Date;
   wasScore: resultType;
