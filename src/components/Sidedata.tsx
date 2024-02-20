@@ -1,23 +1,23 @@
-interface Props {
-  displayInfo: string[];
-  data: string[];
-}
+// interface Props {
+//   displayInfo: string[];
+//   data: string[];
+// }
 
-function Sidedata ({data, displayInfo} : Props) {
+// function Sidedata ({data, displayInfo} : Props) {
 
-  const mappedInfo = displayInfo.map((info, i) => {
-    return (
-      <h2 key={i}>
-        {info}: {data[i]}
-      </h2>
-    );
-  })
+//   const mappedInfo = displayInfo.map((info, i) => {
+//     return (
+//       <h2 key={i}>
+//         {info}: {data[i]}
+//       </h2>
+//     );
+//   })
 
-  return (
-    <>
-      {mappedInfo}
-    </>
-  )
-}
+//   return (
+//     <>
+//       {mappedInfo}
+//     </>
+//   )
+// }
 
-export default Sidedata;
+// export default Sidedata;

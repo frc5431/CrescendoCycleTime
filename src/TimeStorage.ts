@@ -1,51 +1,31 @@
 export default class TimeStorage {
-  private times: DateInfo[];
-  private startTime: DateInfo;
+  private times: Event[] = [];
+  private startTime: Date = new Date();
 
-  constructor() {
-    this.startTime = new DateInfo("start", new Date());
-    this.times = [];
+  constructor(times: Event[], startTime: Date) {
+    this.times = times;
+    this.startTime = startTime;
   }
 
-  restart() {
-    this.startTime = new DateInfo("start", new Date());
-    this.times = [this.startTime];
-  }
+  // consoleLog() {
+  //   let total = 0;
+  //   for (let i = 1; i < this.times.length - 1; i++) {
+  //     if (this.times[i].type === Type.Amp && this.times[i].isScore === resultType.Score) {
+  //       total++
+  //       console.log("increments")
+  //     }
+  //   }
+  //   console.log(total)
+  // }
 
-  getStart() {
-    return this.times[0];
-  }
+  // restart() {
+  //   this.startTime = new Event("start", new Date(), resultType.Start);
+  //   this.times = [this.startTime];
+  // }
 
-  addTime(dateInfo: DateInfo) {
-    this.times.push(dateInfo);
-
-  }
-
-  undo() {
-    this.times.pop();
-  }
-
-  /**
-   * 
-   * @param type Type of data
-   * @returns seconds since last cycle
-   */
-  lastCycleTimeOfType(type: string): number {
-    
-    const typed = this.times.filter(t => ['start', type].includes(t.type));
-
-    if(typed.length < 2) {
-      return 0;
-    }
-    return typed[typed.length - 1].time.getTime() - typed[typed.length - 2].time.getTime();
-  }
-
-  lastCycleTime(): number {
-    if(this.times.length < 2) {
-      return 0;
-    }
-    return this.times[this.times.length - 1].time.getTime() - this.times[this.times.length - 2].time.getTime();
-  }
+  getCount(type: Type, isScore: boolean): number {
+    return this.times.filter(t => {return t.type === type && t.isScore === isScore}).length;
+  } 
 
   bestCycle() {
     // run calc
@@ -55,22 +35,36 @@ export default class TimeStorage {
     // run calc
   }
 
-  averageCycle() {
-    // run calc
+  percentageScored(type: Type):number {
+    if (this.getCount(type, true)+this.getCount(type, false) === 0) {
+      return 100;
+    }
+    return this.getCount(type, true) / (this.getCount(type, false)+this.getCount(type, true)) * 100;
   }
 
-  getTimes() {
+   getTimes() {
     return this.times;
   }
 
+  getStartTime() {
+    return this.startTime;
+  }
   
 }
 
-export class DateInfo {
-  type: string;
+
+export enum Type {
+  Amp = "AMP",
+  Speaker = "SPEAKER",
+  Trap = "TRAP"
+}
+export class Event {
+  type: Type;
   time: Date;
-  constructor(type: string, time: Date) {
+  isScore: boolean;
+  constructor(type: Type, time: Date, isScore: boolean) {
     this.type = type;
     this.time = time;
+    this.isScore = isScore;
   }
 }
