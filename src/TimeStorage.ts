@@ -1,38 +1,36 @@
 export default class TimeStorage {
-  private times: DateInfo[];
-  private startTime: DateInfo;
+  private times: Event[];
+  private startTime = new Date();
 
   constructor() {
-    this.startTime = new DateInfo("start", new Date(), resultType.Start);
     this.times = [];
   }
 
-  consoleLog() {
-    let total = 0;
-    for (let i = 1; i < this.times.length - 1; i++) {
-      if (this.times[i].type === "amp" && this.times[i].wasScore === resultType.Score) {
-        total++
-        console.log("increments")
-      }
-    }
-    console.log(total)
-  }
+  // consoleLog() {
+  //   let total = 0;
+  //   for (let i = 1; i < this.times.length - 1; i++) {
+  //     if (this.times[i].type === Type.Amp && this.times[i].wasScore === resultType.Score) {
+  //       total++
+  //       console.log("increments")
+  //     }
+  //   }
+  //   console.log(total)
+  // }
 
-  restart() {
-    this.startTime = new DateInfo("start", new Date(), resultType.Start);
-    this.times = [this.startTime];
-  }
+  // restart() {
+  //   this.startTime = new Event("start", new Date(), resultType.Start);
+  //   this.times = [this.startTime];
+  // }
 
-  getStart() {
-    return this.times[0];
-  }
+ 
 
-  addTime(dateInfo: DateInfo) {
-    this.times.push(dateInfo);
+  addTime(Event: Event) {
+    this.times.push(Event);
     // const updatedTD = this.times
+    // return this.times
   }
 
-  undo(type: string, wasMissing: resultType) {
+  undo(type: Type, wasMissing: resultType) {
     for (let i = this.times.length-1; i > 0; i--) {
       if (this.times[i].type === type && this.times[i].wasScore === wasMissing) {
         this.times.splice(i, 1);
@@ -63,9 +61,9 @@ export default class TimeStorage {
   }
 
   ampCount(): number {
-    // return this.times.filter(t => {["amp"].includes(t.type) && [resultType.Start].includes(t.wasScore)} ).length
+    // return this.times.filter(t => {t.type === "amp" && t.wasScore === resultType.Score}).length
     let total = 0;
-    for (let i = 1; i < this.times.length - 1; i++) {
+    for (let i = 0; i < this.times.length - 1; i++) {
       if (this.times[i].type === "amp" && this.times[i].wasScore === resultType.Score) {
         total++;
       }
@@ -74,11 +72,11 @@ export default class TimeStorage {
   }
 
   speakerCount(): number {
-    return this.times.filter(t => {["speaker"].includes(t.type) && [resultType.Start].includes(t.wasScore)} ).length
+    return this.times.filter(t => {["speaker"].includes(t.type) && [resultType.Score].includes(t.wasScore)} ).length
   }
 
   trapCount(): number {
-    return this.times.filter(t => {["trap"].includes(t.type) && [resultType.Start].includes(t.wasScore)} ).length
+    return this.times.filter(t => {["trap"].includes(t.type) && [resultType.Score].includes(t.wasScore)} ).length
   }
   ampCountM(): number {
     return this.times.filter(t => {["amp"].includes(t.type) && [resultType.Miss].includes(t.wasScore)} ).length
@@ -103,7 +101,7 @@ export default class TimeStorage {
   averageCycle(type: string) {
     let total = 0;
     let totalElements = 0;
-    for (let i = 2; i < this.times.length - 1; i++) {
+    for (let i = 1; i < this.times.length - 1; i++) {
       if (this.times[i].type === type) {
         total += this.times[i].time.getTime() - this.times[i-1].time.getTime();
         totalElements++;
@@ -119,19 +117,19 @@ export default class TimeStorage {
         return 100;
       }
       return this.ampCount() / (this.ampCount()+this.ampCountM()) * 100;
-    }
+    } 
     else if (type === "speaker") {
       if (this.speakerCount()+this.speakerCountM() === 0) {
         return 100;
       }
       return this.speakerCount() / (this.speakerCount()+this.speakerCountM()) * 100;
-    }
+    } 
     else if (type === "trap") {
       if (this.trapCount()+this.trapCountM() === 0) {
         return 100;
       }
       return this.trapCount() / (this.trapCount()+this.trapCountM()) * 100;
-    }
+    } 
     else {
       return -1;
     }
@@ -141,20 +139,22 @@ export default class TimeStorage {
     return this.times;
   }
 
-
-export enum resultType {
-  Score,
-  Miss,
-  Start
+  
 }
-export class DateInfo {
 
-  type: string;
+
+export enum Type {
+  Amp = "AMP",
+  Speaker = "SPEAKER",
+  Trap = "TRAP"
+}
+export class Event {
+  type: Type;
   time: Date;
-  wasScore: resultType;
-  constructor(type: string, time: Date, wasScore: resultType) {
+  isScore: boolean;
+  constructor(type: Type, time: Date, isScore: boolean) {
     this.type = type;
     this.time = time;
-    this.wasScore = wasScore;
+    this.isScore = isScore;
   }
 }

@@ -1,5 +1,3 @@
-import Sidedata from "./Sidedata";
-
 interface Props {
   name: string;
   count: number;

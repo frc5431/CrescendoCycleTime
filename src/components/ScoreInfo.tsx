@@ -3,7 +3,7 @@ export interface ScoreDataProps {
   totalAmountMissing: number;
 }
 
-const ScoreData: React.FC<ScoreDataProps> = ({totalAmountMissing, totalAmountScored}: ScoreDataProps) => {
+const ScoreInfo: React.FC<ScoreDataProps> = ({totalAmountMissing, totalAmountScored}: ScoreDataProps) => {
 
   return (
     <>
@@ -21,4 +21,4 @@ const ScoreData: React.FC<ScoreDataProps> = ({totalAmountMissing, totalAmountSco
   )
 }
 
-export default ScoreData;
+export default ScoreInfo;

@@ -4,7 +4,7 @@ export interface TimeDataProps {
 }
 
 
-const TimeData: React.FC<TimeDataProps> = ({timeElapsed, timeSinceLastScore}: TimeDataProps) => {
+const TimeInfo: React.FC<TimeDataProps> = ({timeElapsed, timeSinceLastScore}: TimeDataProps) => {
 
   return (
     <>
@@ -22,4 +22,4 @@ const TimeData: React.FC<TimeDataProps> = ({timeElapsed, timeSinceLastScore}: Ti
   )
 }
 
-export default TimeData;
+export default TimeInfo;

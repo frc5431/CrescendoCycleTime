@@ -19,13 +19,16 @@
   grid-column-end: 4;
 }
 
-.timeData {
-  text-align: left;
+.reset {
+
+}
+
+.scoreInfo {
   grid-row: 2;
   grid-column: 1;
 }
 
-.scoreData {
+.timeInfo {
   grid-row: 2;
   grid-column: 3;
 }
