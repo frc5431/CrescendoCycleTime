@@ -43,6 +43,39 @@
   filter: drop-shadow(0 0 1em #ff8800aa);
 }
 
+.reverselogo {
+  will-change: filter;
+  transition: filter 300ms;
+  width: 80px;
+  height: 80px;
+}
+.reverselogo:hover {
+  filter: drop-shadow(0 0 2em #005A2A);
+}
+.reverselogo.react:hover {
+  filter: drop-shadow(0 0 2em #00C896);
+}
+
+@keyframes reverselogo-spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reverselogo {
+    animation: reverselogo-spin infinite 8s linear;
+    will-change: transform; 
+  }
+}
+
+.reverselogo:hover {
+  filter: drop-shadow(0 0 1em #ff8800aa);
+}
+
 
 .card {
   padding: 2em;

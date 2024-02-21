@@ -19,6 +19,17 @@
   grid-column-end: 4;
 }
 
+.titlecontainer {
+  display:flex;
+  align-items:center;
+  vertical-align: center;
+  justify-content: center;
+  grid-row: 1;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  flex-direction: row;
+}
+
 .options {
   display: grid;
   grid-row: 2;
@@ -61,9 +72,10 @@
 }
 
 .imageStyle {
-  width: 20%;
+  display:flex;
+  width: 100px;
   margin: 0 auto;
-  max-width: 100%; 
+  max-width: 100px; 
 }
 
 a {
@@ -103,11 +115,10 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
   margin-left: 10px;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-top: 5px;
   margin-bottom: 10px;
   text-align: center;
-  top: 50%;
-  bottom: 50%;
 }
 button:hover {
   border-color: #646cff;
@@ -115,6 +126,26 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.pausebutton {
+  background-color: #FF5555;
+  color: white;
+  text-shadow: 1px 1px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+}
+
+.startbutton {
+  background-color: #50FA7B;
+  color: white;
+  text-shadow: 1px 1px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+}
+
+.counterbuttonfix {
+  display:flex;
+  text-align: center;
+  align-items:center;
+  vertical-align: center;
+  justify-content: center;
 }
 
 .container {
@@ -138,7 +169,6 @@ button:focus-visible {
   margin-right: 10px;
   margin-top: 0px;
   margin-bottom: 0px;
-  transform: translateY(-60%);
 }
 redbutton:hover {
   border-color: #ffffff;
@@ -157,7 +187,7 @@ redbutton:focus-visible {
   a:hover {
     color: #ffffff;
   }
-  button {
+  redbutton {
     background-color: #f9f9f9;
   }
 }

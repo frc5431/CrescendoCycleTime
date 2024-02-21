@@ -6,8 +6,8 @@ interface Props {
 function Options ({onClickPause, onClickStart}: Props) {
   return (
     <>
-    <button onClick={onClickStart}>Start</button>
-    <button onClick={onClickPause}>Pause</button>
+    <button onClick={onClickStart} className="startbutton">Start</button>
+    <button onClick={onClickPause} className="pausebutton">Pause</button>
   </>
   )
 }
