@@ -7,13 +7,19 @@ import TimeInfo from './components/TimeInfo';
 import Options from './components/Options';
 
 function App() {
+  const [started, setStarted] = useState(false);
   const [timeData, setTimeData] = useState(new TimeStorage([], new Date()));
   const [TSLS, setTSLS] = useState(0); // time since last scored
   const [timeElapsed, setTimeElapsed] = useState(new Date());
 
-  useEffect(() => {
+   useEffect(() => {
     const interval = setInterval(() => {
+      if (!started) {
+        return
+      }
+
       setTimeElapsed(new Date());
+      
       if (timeData.getTimes().length == 0) {
         setTSLS(timeElapsed.getTime() - timeData.getStartTime().getTime());
       }
@@ -21,9 +27,8 @@ function App() {
         setTSLS(timeElapsed.getTime() - timeData.getTimes()[timeData.getTimes().length-1].time.getTime());
       }
     }, 20);
-
     return () => clearInterval(interval);
-  }, [timeData, timeElapsed]);
+  }, [timeData, timeElapsed, started]);
 
   return (
     <div className="grid">
@@ -51,8 +56,8 @@ function App() {
       
       <div className='options'>
         <Options 
-          onClickPause={() => {}}
-          onClickStart={() => {}}
+          onClickPause={() => {setStarted(false)}}
+          onClickStart={startInterval}
           />
       </div>
 
@@ -99,6 +104,10 @@ function App() {
   )
 
   function handleButtonClick (type: Type, isScore: boolean, isUp: boolean) {
+    if (!started) {
+      return;
+    }
+
     if (isUp) {
       const times: Event[] = [...timeData.getTimes(), new Event(type, new Date(), isScore)];
       setTimeData(new TimeStorage(times, timeData.getStartTime()));
@@ -114,6 +123,14 @@ function App() {
       console.log(times);
       setTimeData(new TimeStorage(times, timeData.getStartTime()));
     }
+  }
+
+  function startInterval () {
+    if (started) {
+      return;
+    }
+    setStarted(true);
+    setTimeData(new TimeStorage([], new Date()));
   }
 }
 
