@@ -1,22 +1,9 @@
 export default class TimeStorage {
   private times: Event[] = [];
-  private startTime: Date = new Date();
 
-  constructor(times: Event[], startTime: Date) {
+  constructor(times: Event[]) {
     this.times = times;
-    this.startTime = startTime;
   }
-
-  // consoleLog() {
-  //   let total = 0;
-  //   for (let i = 1; i < this.times.length - 1; i++) {
-  //     if (this.times[i].type === Type.Amp && this.times[i].isScore === resultType.Score) {
-  //       total++
-  //       console.log("increments")
-  //     }
-  //   }
-  //   console.log(total)
-  // }
 
   // restart() {
   //   this.startTime = new Event("start", new Date(), resultType.Start);
@@ -28,7 +15,15 @@ export default class TimeStorage {
   } 
 
   bestCycle() {
-    // run calc
+    // let bestTime = this.times[0].time;
+    
+    // for (let i = 1; i < this.times.length; i++) {
+    //   const currTime = this.times[i].time - this.times[i-1].time;
+    //   if (currTime > bestTime) {
+    //     bestTime = currTime;
+    //   }
+    // }
+    // return 
   }
 
   worstCycle() {
@@ -45,11 +40,6 @@ export default class TimeStorage {
    getTimes() {
     return this.times;
   }
-
-  getStartTime() {
-    return this.startTime;
-  }
-  
 }
 
 
@@ -60,9 +50,9 @@ export enum Type {
 }
 export class Event {
   type: Type;
-  time: Date;
+  time: number;
   isScore: boolean;
-  constructor(type: Type, time: Date, isScore: boolean) {
+  constructor(type: Type, time: number, isScore: boolean) {
     this.type = type;
     this.time = time;
     this.isScore = isScore;
