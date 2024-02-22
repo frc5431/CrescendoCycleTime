@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import TimeStorage, { Event, Type } from './TimeStorage';
 import Counter from './components/Counter';
@@ -8,24 +8,29 @@ import Options from './components/Options';
 
 function App() {
   const [started, setStarted] = useState(false);
-  const [timeData, setTimeData] = useState(new TimeStorage([], new Date()));
+  const intervalTime = useRef(20); // useEffect interval time
+  const [timeData, setTimeData] = useState(new TimeStorage([]));
   const [TSLS, setTSLS] = useState(0); // time since last scored
-  const [timeElapsed, setTimeElapsed] = useState(new Date());
+  const [timeElapsed, setTimeElapsed] = useState(0);
 
    useEffect(() => {
     const interval = setInterval(() => {
-      setTimeElapsed(new Date());
+      if (!started) {
+        return;
+      }
 
+      setTimeElapsed(timeElapsed + intervalTime.current);
+      
       if (timeData.getTimes().length == 0) {
-        setTSLS(timeElapsed.getTime() - timeData.getStartTime().getTime());
+        setTSLS(timeElapsed);
       }
       else {
-        setTSLS(timeElapsed.getTime() - timeData.getTimes()[timeData.getTimes().length - 1].time.getTime());
+        // TODO
+        setTSLS(timeElapsed - (timeData.getTimes()[timeData.getTimes().length - 1].time));
       }
-    }, 20);
-
+    }, intervalTime.current);
     return () => clearInterval(interval);
-  }, [timeData, timeElapsed]);
+  }, [timeData, timeElapsed, started]);
 
   return (
     <div className="grid">
@@ -46,14 +51,14 @@ function App() {
       </div>
       <div className='timeInfo'>
         <TimeInfo
-          timeElapsed={(timeElapsed.getTime() - timeData.getStartTime().getTime()) / 1000}
+          timeElapsed={timeElapsed / 1000}
           timeSinceLastScore={TSLS / 1000}
         />
       </div>
 
       <div className='options'>
         <Options
-          onClickPause={() => { setStarted(false)}}
+          onClickPause={pauseInterval}
           onClickStart={startInterval}
         />
       </div>
@@ -87,10 +92,10 @@ function App() {
           name='Trap'
           count={timeData.getCount(Type.Trap, true)}
           countM={timeData.getCount(Type.Trap, false)}
-          onMClickDown={() => { handleButtonClick(Type.Trap, false, false) }}
-          onMClickUp={() => { handleButtonClick(Type.Trap, false, true) }}
-          onButtonDown={() => { handleButtonClick(Type.Trap, true, false) }}
-          onButtonUp={() => { handleButtonClick(Type.Trap, true, true) }}
+          onMClickDown={() =>{handleButtonClick(Type.Trap, false, false)}}
+          onMClickUp={() =>{handleButtonClick(Type.Trap, false, true)}}
+          onButtonDown={() =>{handleButtonClick(Type.Trap,true, false)}}
+          onButtonUp={() =>{handleButtonClick(Type.Trap, true, true)}}
           percentageScored={timeData.percentageScored(Type.Trap)}
         />
       </div>
@@ -104,9 +109,10 @@ function App() {
     if (!started) {
       return;
     }
+
     if (isUp) {
-      const times: Event[] = [...timeData.getTimes(), new Event(type, new Date(), isScore)];
-      setTimeData(new TimeStorage(times, timeData.getStartTime()));
+      const times: Event[] = [...timeData.getTimes(), new Event(type, timeElapsed, isScore)];
+      setTimeData(new TimeStorage(times));
     }
     else {
       const times: Event[] = [...timeData.getTimes()];
@@ -117,7 +123,7 @@ function App() {
         }
       }
       console.log(times);
-      setTimeData(new TimeStorage(times, timeData.getStartTime()));
+      setTimeData(new TimeStorage(times));
     }
   }
 
@@ -126,7 +132,14 @@ function App() {
       return;
     }
     setStarted(true);
-    setTimeData(new TimeStorage([], new Date()));
+    setTimeData(new TimeStorage(timeData.getTimes()));
+  }
+
+  function pauseInterval () {
+    if (!started) {
+      return;
+    }
+    setStarted(false);
   }
 }
 
