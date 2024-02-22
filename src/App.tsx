@@ -7,13 +7,15 @@ import TimeInfo from './components/TimeInfo';
 import Options from './components/Options';
 
 function App() {
+  const [started, setStarted] = useState(false);
   const [timeData, setTimeData] = useState(new TimeStorage([], new Date()));
   const [TSLS, setTSLS] = useState(0); // time since last scored
   const [timeElapsed, setTimeElapsed] = useState(new Date());
 
-  useEffect(() => {
+   useEffect(() => {
     const interval = setInterval(() => {
       setTimeElapsed(new Date());
+
       if (timeData.getTimes().length == 0) {
         setTSLS(timeElapsed.getTime() - timeData.getStartTime().getTime());
       }
@@ -51,8 +53,8 @@ function App() {
 
       <div className='options'>
         <Options
-          onClickPause={() => { }}
-          onClickStart={() => { }}
+          onClickPause={() => { setStarted(false)}}
+          onClickStart={startInterval}
         />
       </div>
 
@@ -99,13 +101,16 @@ function App() {
   )
 
   function handleButtonClick(type: Type, isScore: boolean, isUp: boolean) {
+    if (!started) {
+      return;
+    }
     if (isUp) {
       const times: Event[] = [...timeData.getTimes(), new Event(type, new Date(), isScore)];
       setTimeData(new TimeStorage(times, timeData.getStartTime()));
     }
     else {
       const times: Event[] = [...timeData.getTimes()];
-      for (let i = times.length - 1; i >= 0; i--) {
+      for (let i = times.length-1; i >= 0; i--) {
         if (times[i].type === type && times[i].isScore === isScore) {
           times.splice(i, 1);
           break;
@@ -114,6 +119,14 @@ function App() {
       console.log(times);
       setTimeData(new TimeStorage(times, timeData.getStartTime()));
     }
+  }
+
+  function startInterval () {
+    if (started) {
+      return;
+    }
+    setStarted(true);
+    setTimeData(new TimeStorage([], new Date()));
   }
 }
 
