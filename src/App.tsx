@@ -5,6 +5,7 @@ import Counter from './components/Counter';
 import ScoreInfo from './components/ScoreInfo';
 import TimeInfo from './components/TimeInfo';
 import Options from './components/Options';
+import confetti from 'canvas-confetti';
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -13,14 +14,17 @@ function App() {
   const [TSLS, setTSLS] = useState(0); // time since last scored
   const [timeElapsed, setTimeElapsed] = useState(0);
 
-   useEffect(() => {
+
+
+
+  useEffect(() => {
     const interval = setInterval(() => {
       if (!started) {
         return;
       }
 
       setTimeElapsed(timeElapsed + intervalTime.current);
-      
+
       if (timeData.getTimes().length == 0) {
         setTSLS(timeElapsed);
       }
@@ -33,6 +37,8 @@ function App() {
   }, [timeData, timeElapsed, started]);
 
   return (
+
+
     <div className="grid">
       <div className="titlecontainer">
         <img className="reverselogo" src="src/assets/note.png" alt="image of frc crescendo note" />
@@ -68,10 +74,10 @@ function App() {
           name='Amp'
           count={timeData.getCount(Type.Amp, true)}
           countM={timeData.getCount(Type.Amp, false)}
-          onMClickDown={() => { handleButtonClick(Type.Amp, false, false) }}
-          onMClickUp={() => { handleButtonClick(Type.Amp, false, true) }}
-          onButtonDown={() => { handleButtonClick(Type.Amp, true, false) }}
-          onButtonUp={() => { handleButtonClick(Type.Amp, true, true) }}
+          onMClickDown={() => { handleButtonClick(Type.Amp, false, false, false) }}
+          onMClickUp={() => { handleButtonClick(Type.Amp, false, true, false) }}
+          onButtonDown={() => { handleButtonClick(Type.Amp, true, false, false) }}
+          onButtonUp={() => { handleButtonClick(Type.Amp, true, true, true) }}
           percentageScored={timeData.percentageScored(Type.Amp)}
         />
       </div>
@@ -80,10 +86,10 @@ function App() {
           name='Speaker'
           count={timeData.getCount(Type.Speaker, true)}
           countM={timeData.getCount(Type.Speaker, false)}
-          onMClickDown={() => { handleButtonClick(Type.Speaker, false, false) }}
-          onMClickUp={() => { handleButtonClick(Type.Speaker, false, true) }}
-          onButtonDown={() => { handleButtonClick(Type.Speaker, true, false) }}
-          onButtonUp={() => { handleButtonClick(Type.Speaker, true, true) }}
+          onMClickDown={() => { handleButtonClick(Type.Speaker, false, false, false) }}
+          onMClickUp={() => { handleButtonClick(Type.Speaker, false, true, false) }}
+          onButtonDown={() => { handleButtonClick(Type.Speaker, true, false, false) }}
+          onButtonUp={() => { handleButtonClick(Type.Speaker, true, true, true) }}
           percentageScored={timeData.percentageScored(Type.Speaker)}
         />
       </div>
@@ -92,20 +98,19 @@ function App() {
           name='Trap'
           count={timeData.getCount(Type.Trap, true)}
           countM={timeData.getCount(Type.Trap, false)}
-          onMClickDown={() =>{handleButtonClick(Type.Trap, false, false)}}
-          onMClickUp={() =>{handleButtonClick(Type.Trap, false, true)}}
-          onButtonDown={() =>{handleButtonClick(Type.Trap,true, false)}}
-          onButtonUp={() =>{handleButtonClick(Type.Trap, true, true)}}
+          onMClickDown={() => { handleButtonClick(Type.Trap, false, false, false) }}
+          onMClickUp={() => { handleButtonClick(Type.Trap, false, true, false) }}
+          onButtonDown={() => { handleButtonClick(Type.Trap, true, false, false) }}
+          onButtonUp={() => { handleButtonClick(Type.Trap, true, true, true) }}
           percentageScored={timeData.percentageScored(Type.Trap)}
         />
       </div>
 
-
-
     </div>
+
   )
 
-  function handleButtonClick(type: Type, isScore: boolean, isUp: boolean) {
+  function handleButtonClick(type: Type, isScore: boolean, isUp: boolean, confettiBool: boolean) {
     if (!started) {
       return;
     }
@@ -113,12 +118,26 @@ function App() {
     if (isUp) {
       const times: Event[] = [...timeData.getTimes(), new Event(type, timeElapsed, isScore)];
       setTimeData(new TimeStorage(times));
+
+      if (confettiBool) {
+        confetti({
+          particleCount: 200,
+          spread: 360,
+          origin: { y: 0.5, x: 0.5 },
+          startVelocity: 40,
+          colors: [
+            'CD3636',
+            '3673CD'
+          ]
+        });
+      }
     }
     else {
       const times: Event[] = [...timeData.getTimes()];
-      for (let i = times.length-1; i >= 0; i--) {
+      for (let i = times.length - 1; i >= 0; i--) {
         if (times[i].type === type && times[i].isScore === isScore) {
           times.splice(i, 1);
+
           break;
         }
       }
@@ -127,7 +146,7 @@ function App() {
     }
   }
 
-  function startInterval () {
+  function startInterval() {
     if (started) {
       return;
     }
@@ -135,7 +154,7 @@ function App() {
     setTimeData(new TimeStorage(timeData.getTimes()));
   }
 
-  function pauseInterval () {
+  function pauseInterval() {
     if (!started) {
       return;
     }

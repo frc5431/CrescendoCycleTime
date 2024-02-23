@@ -1,3 +1,4 @@
+
 interface Props {
   name: string;
   count: number;
@@ -17,7 +18,7 @@ function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
 
       <div className="counterbuttonfix">
         <div>
-          <button onClick={onMClickUp} className="redbutton">M</button>
+          <button onClick={onMClickUp}  className="redbutton">M</button>
         </div>
         <div>
           <button onClick={onButtonUp}>↑</button>
