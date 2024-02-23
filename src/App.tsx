@@ -120,10 +120,11 @@ function App() {
       setTimeData(new TimeStorage(times));
 
       if (confettiBool) {
+         
         confetti({
           particleCount: 200,
           spread: 360,
-          origin: { y: 0.5, x: 0.5 },
+          origin: { y: Math.random() - 0.2, x: Math.random() },
           startVelocity: 40,
           colors: [
             '9370DB',
@@ -162,6 +163,7 @@ function App() {
     }
     setStarted(false);
   }
+  
 }
 
 export default App;
