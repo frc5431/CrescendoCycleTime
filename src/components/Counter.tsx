@@ -1,4 +1,5 @@
 import UndoRoundedIcon from '@mui/icons-material/UndoRounded';
+import NoteImg from "/src/assets/note.png"
 interface Props {
   name: string;
   count: number;
@@ -8,9 +9,11 @@ interface Props {
   onMClickUp: () => void;
   onMClickDown: () => void;
   percentageScored: number;
+  bestCycle: number;
+  worstCycle: number;
 }
 
-function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, onMClickUp, percentageScored }: Props) {
+function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, onMClickUp, percentageScored, bestCycle, worstCycle }: Props) {
 
   return (
     <>
@@ -22,7 +25,7 @@ function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
         </div>
         <div>
           <button onClick={onButtonUp} className="purplebutton">↑</button>
-          <img className="imageStyle" src="src/assets/note.png" alt="image of frc crescendo note" />
+          <img className="imageStyle" src={NoteImg} alt="image of frc crescendo note" />
           <button onClick={onButtonDown} className="purplebutton"><UndoRoundedIcon/></button>
         </div>
         <div>
@@ -33,7 +36,6 @@ function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
         <h2>Missing: {countM}</h2>
       </div>
 
-
       {/* <div>
         <h2>
           Average Time to Score: {averageTimeToScore}
@@ -42,6 +44,16 @@ function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
       <div>
         <h2>
           Perecentage Scored: {percentageScored.toFixed(2)}%
+        </h2>
+      </div>
+      <div>
+        <h2>
+          Best Cycle: {bestCycle.toFixed(2)} seconds
+        </h2>
+      </div>
+      <div>
+        <h2>
+          Worst Cycle: {worstCycle.toFixed(2)} seconds
         </h2>
       </div>
     </>

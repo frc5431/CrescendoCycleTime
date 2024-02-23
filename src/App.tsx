@@ -6,6 +6,7 @@ import ScoreInfo from './components/ScoreInfo';
 import TimeInfo from './components/TimeInfo';
 import Options from './components/Options';
 import confetti from 'canvas-confetti';
+import NoteImg from "/src/assets/note.png"
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -41,11 +42,11 @@ function App() {
 
     <div className="grid">
       <div className="titlecontainer">
-        <img className="reverselogo" src="src/assets/note.png" alt="image of frc crescendo note" />
+        <img className="reverselogo" src={NoteImg} alt="image of frc crescendo note" />
         <h1>
           <span className="crescendo">Crescendo</span> Cycle Time App!
         </h1>
-        <img className="logo" src="src/assets/note.png" alt="image of frc crescendo note" />
+        <img className="logo" src={NoteImg} alt="image of frc crescendo note" />
       </div>
 
 
@@ -79,6 +80,8 @@ function App() {
           onButtonDown={() => { handleButtonClick(Type.Amp, true, false, false) }}
           onButtonUp={() => { handleButtonClick(Type.Amp, true, true, true) }}
           percentageScored={timeData.percentageScored(Type.Amp)}
+          bestCycle={timeData.bestCycle(Type.Amp) / 1000}
+          worstCycle={timeData.worstCycle(Type.Amp) / 1000}
         />
       </div>
       <div className='speaker'>
@@ -91,6 +94,8 @@ function App() {
           onButtonDown={() => { handleButtonClick(Type.Speaker, true, false, false) }}
           onButtonUp={() => { handleButtonClick(Type.Speaker, true, true, true) }}
           percentageScored={timeData.percentageScored(Type.Speaker)}
+          bestCycle={timeData.bestCycle(Type.Speaker) / 1000}
+          worstCycle={timeData.worstCycle(Type.Speaker) / 1000}
         />
       </div>
       <div className='trap'>
@@ -103,8 +108,12 @@ function App() {
           onButtonDown={() => { handleButtonClick(Type.Trap, true, false, false) }}
           onButtonUp={() => { handleButtonClick(Type.Trap, true, true, true) }}
           percentageScored={timeData.percentageScored(Type.Trap)}
+          bestCycle={timeData.bestCycle(Type.Trap) / 1000}
+          worstCycle={timeData.worstCycle(Type.Trap) / 1000}
         />
       </div>
+
+
 
     </div>
 
@@ -120,7 +129,7 @@ function App() {
       setTimeData(new TimeStorage(times));
 
       if (confettiBool) {
-         
+
         confetti({
           particleCount: 200,
           spread: 360,
@@ -163,7 +172,7 @@ function App() {
     }
     setStarted(false);
   }
-  
+
 }
 
 export default App;

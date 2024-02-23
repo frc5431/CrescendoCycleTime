@@ -10,12 +10,12 @@ const TimeInfo: React.FC<TimeDataProps> = ({timeElapsed, timeSinceLastScore}: Ti
     <>
       <div>
         <h2>
-         Time Elapsed: {timeElapsed.toFixed(0)} seconds
+         Time Elapsed: {timeElapsed.toFixed(2)} seconds
         </h2>
       </div>
       <div>
         <h2>
-          Time Since Last Score: {timeSinceLastScore.toFixed(0)} seconds
+          Time Since Last Score: {timeSinceLastScore.toFixed(2)} seconds
         </h2>
       </div>
     </>

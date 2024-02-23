@@ -14,22 +14,47 @@ export default class TimeStorage {
     return this.times.filter(t => {return t.type === type && t.isScore === isScore}).length;
   } 
 
-  bestCycle() {
-    // let bestTime = this.times[0].time;
+  bestCycle(type: Type) {
+    const scores = this.times.filter(t => {return t.isScore});
+    if (scores.length === 0) {
+      return -1;
+    }
+
+    let bestTime = scores[0].type === type ? scores[0].time : -1;
     
-    // for (let i = 1; i < this.times.length; i++) {
-    //   const currTime = this.times[i].time - this.times[i-1].time;
-    //   if (currTime > bestTime) {
-    //     bestTime = currTime;
-    //   }
-    // }
-    // return 
+    for (let i = 1; i < scores.length; i++) {
+      if (scores[i].type === type) {
+        const currTime = scores[i].time - scores[i-1].time;
+        if (currTime < bestTime) {
+          bestTime = currTime;
+        }
+      }
+    }
+    return bestTime;
   }
 
-  worstCycle() {
-    // run calc
+  worstCycle(type: Type) {
+    const scores = this.times.filter(t => {return t.isScore});
+    if (scores.length === 0) {
+      return -1;
+    }
+
+    let worstTime = scores[0].type === type ? scores[0].time : -1;
+    
+    for (let i = 1; i < scores.length; i++) {
+      if (scores[i].type === type) {
+        const currTime = scores[i].time - scores[i-1].time;
+        if (currTime > worstTime) {
+          worstTime = currTime;
+        }
+      }
+    }
+    return worstTime;
   }
 
+  // averageCycle(type: Type) {
+    
+  // }
   percentageScored(type: Type):number {
     if (this.getCount(type, true)+this.getCount(type, false) === 0) {
       return 100;
