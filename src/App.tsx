@@ -30,8 +30,7 @@ function App() {
         setTSLS(timeElapsed);
       }
       else {
-        // TODO
-        setTSLS(timeElapsed - (timeData.getTimes()[timeData.getTimes().length - 1].time));
+        setTSLS(timeElapsed - timeData.getMostRecentScore());
       }
     }, intervalTime.current);
     return () => clearInterval(interval);

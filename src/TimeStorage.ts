@@ -14,6 +14,14 @@ export default class TimeStorage {
     return this.times.filter(t => {return t.type === type && t.isScore === isScore}).length;
   } 
 
+  getMostRecentScore() {
+    const scores = this.times.filter(t => {return t.isScore});
+    if (scores.length === 0) {
+      return -1;
+    }
+    return scores[scores.length-1].time;
+  }
+
   bestCycle(type: Type) {
     const scores = this.times.filter(t => {return t.isScore});
     if (scores.length === 0) {
