@@ -1,4 +1,4 @@
-
+import UndoRoundedIcon from '@mui/icons-material/UndoRounded';
 interface Props {
   name: string;
   count: number;
@@ -21,12 +21,12 @@ function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
           <button onClick={onMClickUp}  className="redbutton">M</button>
         </div>
         <div>
-          <button onClick={onButtonUp}>↑</button>
+          <button onClick={onButtonUp} className="purplebutton">↑</button>
           <img className="imageStyle" src="src/assets/note.png" alt="image of frc crescendo note" />
-          <button onClick={onButtonDown}>↓</button>
+          <button onClick={onButtonDown} className="purplebutton"><UndoRoundedIcon/></button>
         </div>
         <div>
-          <button className="redbutton" onClick={onMClickDown}>-M</button>
+          <button className="redbutton" onClick={onMClickDown}><UndoRoundedIcon/></button>
         </div>
       </div>
       <div>

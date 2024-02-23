@@ -128,6 +128,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.purplebutton {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 40px;
+}
+
 .pausebutton {
   background-color: #FF5555;
   color: white;
