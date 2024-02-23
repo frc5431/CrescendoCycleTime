@@ -126,8 +126,10 @@ function App() {
           origin: { y: 0.5, x: 0.5 },
           startVelocity: 40,
           colors: [
-            'CD3636',
-            '3673CD'
+            '9370DB',
+            '3673CD',
+            '00D4E3',
+            '7D61CF'
           ]
         });
       }
