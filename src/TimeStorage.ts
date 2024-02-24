@@ -28,7 +28,7 @@ export default class TimeStorage {
       return -1;
     }
 
-    let bestTime = scores[0].type === type ? scores[0].time : -1;
+    let bestTime = scores[0].type === type ? scores[0].time : Number.MAX_VALUE;
     
     for (let i = 1; i < scores.length; i++) {
       if (scores[i].type === type) {
