@@ -6,7 +6,7 @@ export interface ScoreDataProps {
 const ScoreInfo: React.FC<ScoreDataProps> = ({totalAmountMissing, totalAmountScored}: ScoreDataProps) => {
 
   return (
-    <>
+    <> 
       <div>
         <h2>
          Total amount scored: {totalAmountScored}

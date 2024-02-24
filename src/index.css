@@ -50,6 +50,13 @@
   grid-column: 3;
 }
 
+.historyGrid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 10px;
+  padding: 10px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(1fr, 3);
@@ -149,6 +156,11 @@ button:focus-visible {
   background-color: #50FA7B;
   color: white;
   text-shadow: 1px 1px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+}
+ 
+.endbutton {
+  text-shadow: 1px 1px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+  background-color: rgb(133, 34, 172);
 }
 
 .counterbuttonfix {

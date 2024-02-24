@@ -8,12 +8,9 @@ interface Props {
   onButtonDown: () => void;
   onMClickUp: () => void;
   onMClickDown: () => void;
-  percentageScored: number;
-  bestCycle: number;
-  worstCycle: number;
 }
 
-function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, onMClickUp, percentageScored, bestCycle, worstCycle }: Props) {
+function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, onMClickUp}: Props) {
 
   return (
     <>
@@ -41,21 +38,6 @@ function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
           Average Time to Score: {averageTimeToScore}
         </h2>
       </div> */}
-      <div>
-        <h2>
-          Perecentage Scored: {percentageScored.toFixed(2)}%
-        </h2>
-      </div>
-      <div>
-        <h2>
-          Best Cycle: {bestCycle.toFixed(2)} seconds
-        </h2>
-      </div>
-      <div>
-        <h2>
-          Worst Cycle: {worstCycle.toFixed(2)} seconds
-        </h2>
-      </div>
     </>
   )
 }

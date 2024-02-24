@@ -7,6 +7,8 @@ import TimeInfo from './components/TimeInfo';
 import Options from './components/Options';
 import confetti from 'canvas-confetti';
 import NoteImg from "/src/assets/note.png"
+import ReactDOM from 'react-dom';
+import History from './components/History';
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -14,7 +16,8 @@ function App() {
   const [timeData, setTimeData] = useState(new TimeStorage([]));
   const [TSLS, setTSLS] = useState(0); // time since last scored
   const [timeElapsed, setTimeElapsed] = useState(0);
-
+  const canvasRef = useRef(null);
+  const [isEnd, setIsEnd] = useState(false);
 
 
 
@@ -37,84 +40,91 @@ function App() {
   }, [timeData, timeElapsed, started]);
 
   return (
+    <>
+    {isEnd && (
+      <>
+        <History timeData={timeData}/>
+        <button onClick={reset}>Restart</button>
+      </>
+    )}
+
+    {!isEnd && (
+      <>
+        <div className="grid">
+          <div className="titlecontainer">
+            <img className="reverselogo" src={NoteImg} alt="image of frc crescendo note" />
+            <h1>
+              <span className="crescendo">Crescendo</span> Cycle Time App!
+            </h1>
+            <img className="logo" src={NoteImg} alt="image of frc crescendo note" />
+          </div>
 
 
-    <div className="grid">
-      <div className="titlecontainer">
-        <img className="reverselogo" src={NoteImg} alt="image of frc crescendo note" />
-        <h1>
-          <span className="crescendo">Crescendo</span> Cycle Time App!
-        </h1>
-        <img className="logo" src={NoteImg} alt="image of frc crescendo note" />
-      </div>
+          <div className="scoreInfo">
+            <ScoreInfo
+              totalAmountScored={timeData.getCount(Type.Amp, true) + timeData.getCount(Type.Speaker, true) + timeData.getCount(Type.Trap, true)}
+              totalAmountMissing={timeData.getCount(Type.Amp, false) + timeData.getCount(Type.Speaker, false) + timeData.getCount(Type.Trap, false)}
+            />
+          </div>
+          <div className='timeInfo'>
+            <TimeInfo
+              timeElapsed={timeElapsed / 1000}
+              timeSinceLastScore={TSLS / 1000}
+            />
+          </div>
+
+          <div className='options'>
+            <Options
+              onClickPause={pauseInterval}
+              onClickStart={startInterval}
+              onClickEnd={handleGameEnd}
+            />
+          </div>
+
+          <div className='amp'>
+            <Counter
+              name='Amp'
+              count={timeData.getCount(Type.Amp, true)}
+              countM={timeData.getCount(Type.Amp, false)}
+              onMClickDown={() => { handleButtonClick(Type.Amp, false, false, false) }}
+              onMClickUp={() => { handleButtonClick(Type.Amp, false, true, false) }}
+              onButtonDown={() => { handleButtonClick(Type.Amp, true, false, false) }}
+              onButtonUp={() => { handleButtonClick(Type.Amp, true, true, true) }}
+            />
+          </div>
+          <div className='speaker'>
+            <Counter
+              name='Speaker'
+              count={timeData.getCount(Type.Speaker, true)}
+              countM={timeData.getCount(Type.Speaker, false)}
+              onMClickDown={() => { handleButtonClick(Type.Speaker, false, false, false) }}
+              onMClickUp={() => { handleButtonClick(Type.Speaker, false, true, false) }}
+              onButtonDown={() => { handleButtonClick(Type.Speaker, true, false, false) }}
+              onButtonUp={() => { handleButtonClick(Type.Speaker, true, true, true) }}
+            />
+          </div>
+          <div className='trap'>
+            <Counter
+              name='Trap'
+              count={timeData.getCount(Type.Trap, true)}
+              countM={timeData.getCount(Type.Trap, false)}
+              onMClickDown={() => { handleButtonClick(Type.Trap, false, false, false) }}
+              onMClickUp={() => { handleButtonClick(Type.Trap, false, true, false) }}
+              onButtonDown={() => { handleButtonClick(Type.Trap, true, false, false) }}
+              onButtonUp={() => { handleButtonClick(Type.Trap, true, true, true) }}
+            />
+          </div>
 
 
-      <div className="scoreInfo">
-        <ScoreInfo
-          totalAmountScored={timeData.getCount(Type.Amp, true) + timeData.getCount(Type.Speaker, true) + timeData.getCount(Type.Trap, true)}
-          totalAmountMissing={timeData.getCount(Type.Amp, false) + timeData.getCount(Type.Speaker, false) + timeData.getCount(Type.Trap, false)}
-        />
-      </div>
-      <div className='timeInfo'>
-        <TimeInfo
-          timeElapsed={timeElapsed / 1000}
-          timeSinceLastScore={TSLS / 1000}
-        />
-      </div>
+          {ReactDOM.createPortal((<>
+            <canvas ref={canvasRef}/>
+          
+          </>), window.document.body)}
+        </div>
+      </>
+    )}
 
-      <div className='options'>
-        <Options
-          onClickPause={pauseInterval}
-          onClickStart={startInterval}
-        />
-      </div>
-
-      <div className='amp'>
-        <Counter
-          name='Amp'
-          count={timeData.getCount(Type.Amp, true)}
-          countM={timeData.getCount(Type.Amp, false)}
-          onMClickDown={() => { handleButtonClick(Type.Amp, false, false, false) }}
-          onMClickUp={() => { handleButtonClick(Type.Amp, false, true, false) }}
-          onButtonDown={() => { handleButtonClick(Type.Amp, true, false, false) }}
-          onButtonUp={() => { handleButtonClick(Type.Amp, true, true, true) }}
-          percentageScored={timeData.percentageScored(Type.Amp)}
-          bestCycle={timeData.bestCycle(Type.Amp) / 1000}
-          worstCycle={timeData.worstCycle(Type.Amp) / 1000}
-        />
-      </div>
-      <div className='speaker'>
-        <Counter
-          name='Speaker'
-          count={timeData.getCount(Type.Speaker, true)}
-          countM={timeData.getCount(Type.Speaker, false)}
-          onMClickDown={() => { handleButtonClick(Type.Speaker, false, false, false) }}
-          onMClickUp={() => { handleButtonClick(Type.Speaker, false, true, false) }}
-          onButtonDown={() => { handleButtonClick(Type.Speaker, true, false, false) }}
-          onButtonUp={() => { handleButtonClick(Type.Speaker, true, true, true) }}
-          percentageScored={timeData.percentageScored(Type.Speaker)}
-          bestCycle={timeData.bestCycle(Type.Speaker) / 1000}
-          worstCycle={timeData.worstCycle(Type.Speaker) / 1000}
-        />
-      </div>
-      <div className='trap'>
-        <Counter
-          name='Trap'
-          count={timeData.getCount(Type.Trap, true)}
-          countM={timeData.getCount(Type.Trap, false)}
-          onMClickDown={() => { handleButtonClick(Type.Trap, false, false, false) }}
-          onMClickUp={() => { handleButtonClick(Type.Trap, false, true, false) }}
-          onButtonDown={() => { handleButtonClick(Type.Trap, true, false, false) }}
-          onButtonUp={() => { handleButtonClick(Type.Trap, true, true, true) }}
-          percentageScored={timeData.percentageScored(Type.Trap)}
-          bestCycle={timeData.bestCycle(Type.Trap) / 1000}
-          worstCycle={timeData.worstCycle(Type.Trap) / 1000}
-        />
-      </div>
-
-
-
-    </div>
+    </>
 
   )
 
@@ -124,12 +134,16 @@ function App() {
     }
 
     if (isUp) {
+      if (type === Type.Trap && isScore && timeData.getCount(Type.Trap, true ) > 2) {
+        return;
+      }
+
       const times: Event[] = [...timeData.getTimes(), new Event(type, timeElapsed, isScore)];
       setTimeData(new TimeStorage(times));
 
-      if (confettiBool) {
+      if (confettiBool && canvasRef.current) {
 
-        confetti({
+        confetti.create(canvasRef.current, {resize: true})({
           particleCount: 200,
           spread: 360,
           origin: { y: Math.random() - 0.2, x: Math.random() },
@@ -171,7 +185,18 @@ function App() {
     }
     setStarted(false);
   }
+  
+  function handleGameEnd() {
+    setIsEnd(true);
+    pauseInterval();
+  }
 
+  function reset() {
+    setIsEnd(false);
+    setTimeData(new TimeStorage([]));
+    setTSLS(0);
+    setTimeElapsed(0);
+  }
 }
 
 export default App;
