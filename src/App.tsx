@@ -44,7 +44,7 @@ function App() {
     {isEnd && (
       <>
         <History timeData={timeData}/>
-        <button onClick={reset}>Restart</button>
+        <button onClick={reset} className="restart" >Restart</button>
       </>
     )}
 
