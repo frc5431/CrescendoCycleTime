@@ -25,7 +25,7 @@ function Counter({ name, count, countM, onButtonDown, onButtonUp, onMClickDown, 
         </div>
         <div>
           <button onClick={onButtonUp} className="purplebutton">↑</button>
-          <img className="imageStyle" src={NoteImg} alt="image of frc crescendo note" />
+          <div className="arrowbuttonfix">  <img className="imageStyle" src={NoteImg} alt="image of frc crescendo note" /></div>
           <button onClick={onButtonDown} className="purplebutton"><UndoRoundedIcon/></button>
         </div>
         <div>

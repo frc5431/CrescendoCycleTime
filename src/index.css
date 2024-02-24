@@ -116,8 +116,8 @@ button {
   background-color: #BD93F9;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin-left: 10px;
-  margin-right: 5px;
+  margin-left: 20px;
+  margin-right: 1px;
   margin-top: 5px;
   margin-bottom: 10px;
   text-align: center;
@@ -151,11 +151,23 @@ button:focus-visible {
 }
 
 .counterbuttonfix {
+  
   display:flex;
   text-align: center;
   align-items:center;
   vertical-align: center;
   justify-content: center;
+}
+
+.arrowbuttonfix {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  vertical-align: center;
+  justify-content: center;
+  flex-direction:column;
+  justify-self: center;
+  justify-items: center;
 }
 
 .container {
