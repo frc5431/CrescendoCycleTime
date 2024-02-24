@@ -7,7 +7,6 @@ import TimeInfo from './components/TimeInfo';
 import Options from './components/Options';
 import confetti from 'canvas-confetti';
 import NoteImg from "/src/assets/note.png"
-import ReactDOM from 'react-dom';
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -15,7 +14,6 @@ function App() {
   const [timeData, setTimeData] = useState(new TimeStorage([]));
   const [TSLS, setTSLS] = useState(0); // time since last scored
   const [timeElapsed, setTimeElapsed] = useState(0);
-  const canvasRef = useRef(null);
 
 
 
@@ -115,10 +113,7 @@ function App() {
       </div>
 
 
-      {ReactDOM.createPortal((<>
-        <canvas ref={canvasRef}/>
-      
-      </>), window.document.body)}
+
     </div>
 
   )
@@ -129,16 +124,12 @@ function App() {
     }
 
     if (isUp) {
-      if (timeData.getCount(Type.Trap, true ) > 2) {
-        return;
-      }
-
       const times: Event[] = [...timeData.getTimes(), new Event(type, timeElapsed, isScore)];
       setTimeData(new TimeStorage(times));
 
-      if (confettiBool && canvasRef.current) {
+      if (confettiBool) {
 
-        confetti.create(canvasRef.current, {resize: true})({
+        confetti({
           particleCount: 200,
           spread: 360,
           origin: { y: Math.random() - 0.2, x: Math.random() },
