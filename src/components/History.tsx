@@ -30,6 +30,7 @@ function History({timeData} : Props) {
 
       {/* amp data*/}
       <div>
+        <h1>Amp data</h1>
         <h2>
           Perecentage Scored: {timeData.percentageScored(Type.Amp).toFixed(2)}%
         </h2>
@@ -40,14 +41,35 @@ function History({timeData} : Props) {
           Worst Cycle: {(timeData.worstCycle(Type.Amp) / 1000).toFixed(2)} seconds
         </h2>
       </div>
-    </div>
-                  // percentageScored={timeData.percentageScored(Type.Speaker)}
-                  // bestCycle={timeData.bestCycle(Type.Speaker) / 1000}
-                  // worstCycle={timeData.worstCycle(Type.Speaker) / 1000}
 
-              //     percentageScored={timeData.percentageScored(Type.Trap)}
-              // bestCycle={timeData.bestCycle(Type.Trap) / 1000}
-              // worstCycle={timeData.worstCycle(Type.Trap) / 1000}
+      {/* Speaker data*/}
+      <div>
+        <h1>Speaker data</h1>
+        <h2>
+          Perecentage Scored: {timeData.percentageScored(Type.Speaker).toFixed(2)}%
+        </h2>
+        <h2>
+          Best Cycle: {(timeData.bestCycle(Type.Speaker) / 1000).toFixed(2)} seconds
+        </h2>
+        <h2>
+          Worst Cycle: {(timeData.worstCycle(Type.Speaker) / 1000).toFixed(2)} seconds
+        </h2>
+      </div>
+
+      {/* Trap data*/}
+      <div>
+        <h1>Trap data</h1>
+        <h2>
+          Perecentage Scored: {timeData.percentageScored(Type.Trap).toFixed(2)}%
+        </h2>
+        <h2>
+          Best Cycle: {(timeData.bestCycle(Type.Trap) / 1000).toFixed(2)} seconds
+        </h2>
+        <h2>
+          Worst Cycle: {(timeData.worstCycle(Type.Trap) / 1000).toFixed(2)} seconds
+        </h2>
+      </div>
+    </div>
   ) 
 }
 
