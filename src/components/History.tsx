@@ -20,14 +20,12 @@ function History({timeData} : Props) {
   })
   return (
     <div className="endcontainer">
-      <div className="eventstyle">
-        <h1>Events</h1>
-        {scores}
-      </div>
+      
     <div className="historyFlex">
       <h1>
         History
       </h1>
+      
       
       {/* all events*/}
 
@@ -74,6 +72,10 @@ function History({timeData} : Props) {
           Worst Cycle: {(timeData.worstCycle(Type.Trap) / 1000).toFixed(2)} seconds
         </h3>
       </div>
+      </div>
+      <div className="eventstyle">
+        <h1>Events</h1>
+        {scores}
       </div>
       <div className="logocontainer"><img className="biglogo" src={NoteImg} alt="image of frc crescendo note" /></div>
     </div>
