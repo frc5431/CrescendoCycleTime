@@ -9,26 +9,11 @@
   color:#00C896;
 }
 
-.endcontainer {
-  display:flex;
-  justify-content:space-between;
-  margin-bottom: 0px;
-  margin-top: 0px;
-}
-
 .logocontainer {
   height: 100%;
   align-items: center;
   vertical-align: center;
   columns: center;
-}
-
-.eventstyle {
-  justify-content: center;
-  text-align: center;
-  align-items: flex-start;
-  flex-direction: column;
-  margin-right: 10px;
 }
 
 .logo {
@@ -61,19 +46,11 @@
   }
 }
 
-.historyFlex {  
-  display: flex;
-  justify-content: left;
-  text-align: left;
-  flex-direction:column;
-}
-
 .logo:hover {
   filter: drop-shadow(0 0 1em #ff8800aa);
 }
 
 .biglogo {
-
   align-items: center;
   will-change: filter;
   transition: filter 300ms;

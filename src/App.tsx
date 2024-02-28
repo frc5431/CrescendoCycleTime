@@ -8,7 +8,7 @@ import Options from './components/Options';
 import confetti from 'canvas-confetti';
 import NoteImg from "/src/assets/note.png"
 import ReactDOM from 'react-dom';
-import History from './components/History';
+import EndScreen from './components/EndScreen';
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -43,8 +43,7 @@ function App() {
     <>
     {isEnd && (
       <>
-        <History timeData={timeData}/>
-        <button onClick={reset} className="restart" >Restart</button>
+        <EndScreen timeData={timeData} onRestart={reset}/>
       </>
     )}
 

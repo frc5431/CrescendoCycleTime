@@ -24,9 +24,6 @@ export default class TimeStorage {
 
   bestCycle(type: Type) {
     const scores = this.times.filter(t => {return t.isScore});
-    if (scores.length === 0) {
-      return -1;
-    }
 
     let bestTime = scores[0].type === type ? scores[0].time : Number.MAX_VALUE;
     
@@ -38,16 +35,13 @@ export default class TimeStorage {
         }
       }
     }
-    return bestTime;
+    if (bestTime != Number.MAX_VALUE) return bestTime;
   }
 
   worstCycle(type: Type) {
     const scores = this.times.filter(t => {return t.isScore});
-    if (scores.length === 0) {
-      return -1;
-    }
 
-    let worstTime = scores[0].type === type ? scores[0].time : -1;
+    let worstTime = scores[0].type === type ? scores[0].time : Number.MAX_VALUE;
     
     for (let i = 1; i < scores.length; i++) {
       if (scores[i].type === type) {
@@ -57,7 +51,7 @@ export default class TimeStorage {
         }
       }
     }
-    return worstTime;
+    if (worstTime != Number.MIN_VALUE) return worstTime;
   }
 
   // averageCycle(type: Type) {

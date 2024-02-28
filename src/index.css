@@ -199,6 +199,12 @@ button:focus-visible {
   background-color: #649c67;
 }
 
+.eventStyle {
+  width: 100vh;
+  height: 100vh;
+  overflow: scroll;
+}
+
 .redbutton {
   color: #ffffff;
   width: 45px;
@@ -247,4 +253,26 @@ canvas {
   pointer-events: none;
   width: 100vw;
   height: 100vh;
+}
+
+.infoFlex {  
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  flex-direction:column;
+}
+
+.eventstyle {
+  justify-content: center;
+  text-align: center;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.endcontainer {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
